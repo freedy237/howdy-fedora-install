@@ -151,6 +151,52 @@ sudo chmod -R o+rx /usr/share/howdy/dlib-data
 ```bash
 sudo chmod +x /usr/bin/howdy
 ```
+```bash
+sudo usermod -aG video gdm
+```
+```bash
+sudo chmod 666 /dev/video*
+```
+```bash
+sudo chmod 755 /usr/lib64/security/pam_howdy.so
+```
+
+## 8. Créer un module SELinux personnalisé pour autoriser Howdy
+Créer un fichier de politique SELinux, par exemple howdy.te :
+
+```bash
+sudo nano howdy.te
+```
+
+Ajoutez-y le contenu suivant :
+
+```
+module howdy 1.0;
+
+require {
+    type unconfined_t;
+    type v4l_device_t;
+    class chr_file { open read write ioctl };
+}
+
+# Autoriser l'accès à la caméra pour Howdy
+allow unconfined_t v4l_device_t:chr_file { open read write ioctl };
+
+```
+
+Compiler le module :
+ 
+```bash
+checkmodule -M -m -o howdy.mod howdy.te
+semodule_package -o howdy.pp -m howdy.mod
+```
+
+Installer le module SELinux :
+
+```bash
+sudo semodule -i howdy.pp
+```
+
 ## 🎯 Conclusion
 Votre système Fedora 42 est maintenant configuré pour utiliser la reconnaissance faciale avec Howdy. 🚀
 
