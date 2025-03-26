@@ -161,7 +161,7 @@ sudo chmod 666 /dev/video*
 sudo chmod 755 /usr/lib64/security/pam_howdy.so
 ```
 
-## 8. Créer un module SELinux personnalisé pour autoriser Howdy
+## 9. Créer un module SELinux personnalisé pour autoriser Howdy
 Créer un fichier de politique SELinux, par exemple howdy.te :
 
 ```bash
