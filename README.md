@@ -6,7 +6,7 @@ Avant d'installer Howdy, il faut récupérer les paquets nécessaires :
 ```bash
 wget https://download.copr.fedorainfracloud.org/results/principis/howdy-beta/fedora-42-x86_64/07780296-python-pyv4l2/python3-pyv4l2-1.0.2-3.20240124gitf12f0b3.fc41.x86_64.rpm
 wget https://download.copr.fedorainfracloud.org/results/principis/howdy-beta/fedora-42-x86_64/07780294-python-keyboard/python3-keyboard-0.13.5-3.fc41.noarch.rpm
-wget https://download.copr.fedorainfracloud.org/results/principis/howdy-beta/fedora-42-x86_64/07780296-python-pyv4l2/python3-pyv4l2-1.0.2-3.20240124gitf12f0b3.fc41.x86_64.rpm
+wget https://download.copr.fedorainfracloud.org/results/principis/howdy-beta/fedora-42-x86_64/07780292-python-elevate/python3-elevate-0.1.3-3.20240124git78e82a8.fc41.noarch.rpm
 ```
 
 ## 2. Installer les dépendances
