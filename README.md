@@ -1,4 +1,4 @@
-# Installation et Configuration de Howdy 3.0.0-5 sur Fedora 42
+# Installation et Configuration de Howdy 3.0.0-5 sur Fedora 43
 
 ## 1. Télécharger les dépendances
 Avant d'installer Howdy, il faut récupérer les paquets nécessaires :
@@ -23,7 +23,7 @@ sudo dnf install \
 Ensuite, installez OpenCV et V4L2 :
 
 ```bash
-sudo dnf install -y opencv opencv-devel opencv-python
+sudo dnf install -y opencv opencv-devel python3-opencv
 sudo dnf install -y v4l-utils
 ```
 
@@ -31,15 +31,18 @@ sudo dnf install -y v4l-utils
 Téléchargez les fichiers d'installation de Howdy :
 
 ```bash
-wget https://download.copr.fedorainfracloud.org/results/principis/howdy-beta/fedora-41-x86_64/08674716-howdy/howdy-data-3.0.0-5.20250220gitaef35b5.fc41.noarch.rpm
-wget https://download.copr.fedorainfracloud.org/results/principis/howdy-beta/fedora-41-x86_64/08674716-howdy/howdy-3.0.0-5.20250220gitaef35b5.fc41.x86_64.rpm
-wget https://download.copr.fedorainfracloud.org/results/principis/howdy-beta/fedora-41-x86_64/08674716-howdy/howdy-gtk-3.0.0-5.20250220gitaef35b5.fc41.noarch.rpm
+wget https://download.copr.fedorainfracloud.org/results/principis/howdy-beta/fedora-42-x86_64/09288128-howdy/howdy-data-3.0.0-7.20250714gitd3ab993.fc42.noarch.rpm
+wget https://download.copr.fedorainfracloud.org/results/principis/howdy-beta/fedora-42-x86_64/09288128-howdy/howdy-3.0.0-7.20250714gitd3ab993.fc42.x86_64.rpm
+wget https://download.copr.fedorainfracloud.org/results/principis/howdy-beta/fedora-42-x86_64/09288128-howdy/howdy-gtk-3.0.0-7.20250714gitd3ab993.fc42.noarch.rpm
+wget https://download.copr.fedorainfracloud.org/results/principis/howdy-beta/fedora-42-x86_64/09288128-howdy/howdy-debuginfo-3.0.0-7.20250714gitd3ab993.fc42.x86_64.rpm
+wget https://download.copr.fedorainfracloud.org/results/principis/howdy-beta/fedora-42-x86_64/09288128-howdy/howdy-debugsource-3.0.0-7.20250714gitd3ab993.fc42.x86_64.rpm
+
 ```
 
 Installez les fichiers :
 
 ```bash
-sudo dnf install ~/Téléchargements/howdy-*.fc41.*.rpm --exclude=*debug*
+sudo dnf install ~/Téléchargements/howdy-*.fc41.*.rpm
 ```
 
 ## 4. Configurer Howdy
@@ -172,15 +175,20 @@ Ajoutez-y le contenu suivant :
 
 ```
 module howdy 1.0;
-
 require {
-    type unconfined_t;
+    type lib_t;
+    type xdm_t;
     type v4l_device_t;
-    class chr_file { open read write ioctl };
+    type sysctl_vm_t;
+    class chr_file map;
+    class file { create getattr open read write };
+    class dir add_name;
 }
 
-# Autoriser l'accès à la caméra pour Howdy
-allow unconfined_t v4l_device_t:chr_file { open read write ioctl };
+allow xdm_t lib_t:dir add_name;
+allow xdm_t lib_t:file { create write };
+allow xdm_t sysctl_vm_t:file { getattr open read };
+allow xdm_t v4l_device_t:chr_file map;
 
 ```
 
