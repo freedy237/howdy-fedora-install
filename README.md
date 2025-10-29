@@ -1,4 +1,4 @@
-# Installation et Configuration de Howdy 3.0.0-5 sur Fedora 43
+# Installation et Configuration de Howdy 3.0.0-5 sur Fedora 42
 
 ## 1. Télécharger les dépendances
 Avant d'installer Howdy, il faut récupérer les paquets nécessaires :
